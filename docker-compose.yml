@@ -1,0 +1,33 @@
+version: '3.4'
+services:
+  webserver:
+    build:
+        context: .
+        dockerfile: dockerfile
+    ports:
+        - "5000:5000"
+    networks:
+        - samplenetwork
+    depends_on:
+        - mongo_seed
+    deploy:
+        resources:
+            limits:
+                memory: 6000M
+  mongo_seed:
+    build:
+        context: .
+        dockerfile: mongoDockerfile
+    networks:
+        - samplenetwork
+    depends_on:
+        - mongo_db
+  mongo_db:
+    image: mongo
+    ports:
+        - "27017:27017"
+    networks: 
+        - samplenetwork
+networks:
+  samplenetwork:
+    driver: bridge

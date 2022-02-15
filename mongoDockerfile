@@ -1,0 +1,3 @@
+FROM mongo
+COPY mongo_dump /app/dump
+CMD mongorestore --drop --uri "mongodb://mongo_db:27017" --nsInclude red.questions /app/dump
